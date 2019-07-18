@@ -5,3 +5,7 @@ def colorize(val):
     
 for i in range(len(dataframes)):
     dataframes[i] = dataframes[i].style.applymap(colorize)
+
+#output everything to formatted excel files
+for i in range(len(dataframes)):
+    dataframes[i].to_excel(r"friday_data\\"+d_names[i]+'_output.xlsx', engine='openpyxl')
