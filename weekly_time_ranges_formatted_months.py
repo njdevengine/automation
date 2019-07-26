@@ -1,4 +1,14 @@
+from datetime import date
+
 ranges = []
+
+today = date.today()
+offset = (today.weekday() - 3) % 7
+last_thurs = today - timedelta(days=offset)
+# thurs = last_thurs.strftime("%Y-%m-%d")
+last_friday = last_thurs - datetime.timedelta(days=-1,weeks=1)
+# friday = last_friday.strftime("%Y-%m-%d")
+
 end = last_thurs
 start = last_friday
 for i in range(1,53):
