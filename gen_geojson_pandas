@@ -1,19 +1,14 @@
-import pandas as pd
-import geojson
-
-def data2geojson(df):
-    features = []
-    insert_features = lambda X: features.append(
-            geojson.Feature(geometry=geojson.Point((X["long"],
-                                                    X["lat"],
-                                                    X["elev"])),
-                            properties=dict(name=X["name"],
-                                            description=X["description"])))
-    df.apply(insert_features, axis=1)
-    with open('map1.geojson', 'w', encoding='utf8') as fp:
-        geojson.dump(geojson.FeatureCollection(features), fp, sort_keys=True, ensure_ascii=False)
-        
-        
-mask = mask.rename(columns = {"lon":"long","Store":"name","address":"description"})
-mask["elev"] = 0
-data2geojson(mask)
+def df_to_geojson(df, properties, lat='latitude', lon='longitude'):
+    geojson = {'type':'FeatureCollection', 'features':[]}
+    for _, row in df.iterrows():
+        feature = {'type':'Feature',
+                   'properties':{},
+                   'geometry':{'type':'Point',
+                               'coordinates':[]}}
+        feature['geometry']['coordinates'] = [row[lon],row[lat]]
+        for prop in properties:
+            feature['properties'][prop] = row[prop]
+        geojson['features'].append(feature)
+    return geojson
+    
+df_to_geojson(clean,list(clean),lat='lat',lon='lon')
