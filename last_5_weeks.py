@@ -1,4 +1,6 @@
 # FRIDAY - THURSDAY LAST 5 WEEKS
+from datetime import date
+
 today = date.today()
 offset = (today.weekday() - 3) % 7
 last_thurs = today - timedelta(days=offset)
